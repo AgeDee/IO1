@@ -17,20 +17,13 @@ namespace ConsoleApp7
             fs = new FileStream("plik.txt", FileMode.Open);
 
             byte[] buffer = new byte[1024];
-            fs.BeginRead(buffer, 0, buffer.Length, myAsyncCallback, new object[] { fs, buffer });
-            
-            Thread.Sleep(5000);
-        }
+            fs.BeginRead(buffer, 0, buffer.Length, null, new object[] {});
 
-        static void myAsyncCallback(IAsyncResult ar)
-        {
-            object ob = ar.AsyncState;
-
-            FileStream fs = (FileStream)((object[])ob)[0];
-            byte[] buffer = (byte[])((object[])ob)[1];
-
+            Thread.Sleep(10);
             fs.Close();
             Console.WriteLine("Zamknięto plik. buffer: " + new string(new ASCIIEncoding().GetChars(buffer)));
+
+            Thread.Sleep(5000);
         }
 
     }
